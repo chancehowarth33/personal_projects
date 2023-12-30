@@ -1,18 +1,5 @@
-
-/**
- * This interface defines a single movie and exposes movie properties
- * required by the frontend: title, genre, year, country, and duration.
- *
- * The constructor of the class
- * public Movie(String title, String genre, int year, String country, double duration)
- * {
- * this.title = title;
- * this.genre = genre;
- * this.year = year;
- * this.country = country;
- * this.duration = duration;
- * }
- */
+// Name: Chance Howarth
+// Email: howarthchance@gmail.com
 
 public interface MovieInterface extends Comparable<MovieInterface>{
     /**
