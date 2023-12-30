@@ -1,32 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-// Main File:        p3Heap.c
-// This File:        p3Heap.c
-// Other Files:      
-// Semester:         CS 354 Lecture 001 Fall 2023
-// Grade Group:      gg12
-// Instructor:       deppeler
-// 
-// Author:           Chance Howarth
-// Email:            crhowarth@wisc.edu
-// CS Login:         howarth
-//
-///////////////////////////  WORK LOG  //////////////////////////////
-//  Document your work sessions on your copy http://tiny.cc/work-log
-//  Download and submit a pdf of your work log for each project.
-/////////////////////////// OTHER SOURCES OF HELP ////////////////////////////// 
-// Persons:          NONE
-//
-// Online sources:   NONE
-// 
-// AI chats:         NONE
-//////////////////////////// 80 columns wide ///////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-//
-// Copyright 2020-2023 Deb Deppeler based on work by Jim Skrentny
-// Posting or sharing this file is prohibited, including any changes/additions.
-// Used by permission FALL 2023, CS354-deppeler
-//
-///////////////////////////////////////////////////////////////////////////////
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -35,54 +9,17 @@
 #include <stdio.h>
 #include <string.h>
 #include "p3Heap.h"
+
 /*
  * This structure serves as the header for each allocated and free block.
  * It also serves as the footer for each free block.
  */
 typedef struct blockHeader {           
-    /*
-     * 1) The size of each heap block must be a multiple of 8
-     * 2) heap blocks have blockHeaders that contain size and status bits
-     * 3) free heap block contain a footer, but we can use the blockHeader 
-     *.
-     * All heap blocks have a blockHeader with size and status
-     * Free heap blocks have a blockHeader as its footer with size only
-     *
-     * Status is stored using the two least significant bits.
-     *   Bit0 => least significant bit, last bit
-     *   Bit0 == 0 => free block
-     *   Bit0 == 1 => allocated block
-     *
-     *   Bit1 => second last bit 
-     *   Bit1 == 0 => previous block is free
-     *   Bit1 == 1 => previous block is allocated
-     * 
-     * Start Heap: 
-     *  The blockHeader for the first block of the heap is after skip 4 bytes.
-     *  This ensures alignment requirements can be met.
-     * 
-     * End Mark: 
-     *  The end of the available memory is indicated using a size_status of 1.
-     * 
-     * Examples:
-     * 
-     * 1. Allocated block of size 24 bytes:
-     *    Allocated Block Header:
-     *      If the previous block is free      p-bit=0 size_status would be 25
-     *      If the previous block is allocated p-bit=1 size_status would be 27
-     * 
-     * 2. Free block of size 24 bytes:
-     *    Free Block Header:
-     *      If the previous block is free      p-bit=0 size_status would be 24
-     *      If the previous block is allocated p-bit=1 size_status would be 26
-     *    Free Block Footer:
-     *      size_status should be 24
-     */
     int size_status;
-} blockHeader;         
-/* Global variable - DO NOT CHANGE NAME or TYPE. 
- * It must point to the first block in the heap and is set by init_heap()
- * i.e., the block at the lowest address.
+} blockHeader;       
+
+/*
+ * points to the first block in the heap and is set by init_heap()
  */
 blockHeader *heap_start = NULL;     
 /* Size of heap allocation padded to round to nearest page size.
@@ -120,37 +57,6 @@ blockHeader* findOptimalBlock(int requiredSize) {
 }
 /* 
  * Function for allocating 'size' bytes of heap memory.
- * Argument size: requested size for the payload
- * Returns address of allocated block (payload) on success.
- * Returns NULL on failure.
- *
- * This function must:
- * - Check size - Return NULL if size < 1 
- * - Determine block size rounding up to a multiple of 8 
- *   and possibly adding padding as a result.
- *
- * - Use BEST-FIT PLACEMENT POLICY to chose a free block
- *
- * - If the BEST-FIT block that is found is exact size match
- *   - 1. Update all heap blocks as needed for any affected blocks
- *   - 2. Return the address of the allocated block payload
- *
- * - If the BEST-FIT block that is found is large enough to split 
- *   - 1. SPLIT the free block into two valid heap blocks:
- *         1. an allocated block
- *         2. a free block
- *         NOTE: both blocks must meet heap block requirements 
- *       - Update all heap block header(s) and footer(s) 
- *              as needed for any affected blocks.
- *   - 2. Return the address of the allocated block payload
- *
- *   Return if NULL unable to find and allocate block for required size
- *
- * Note: payload address that is returned is NOT the address of the
- *       block header.  It is the address of the start of the 
- *       available memory for the requesterr.
- *
- * Tips: Be careful with pointer arithmetic and scale factors.
  */
 
 void* balloc(int allocationSize) {
@@ -183,24 +89,8 @@ void* balloc(int allocationSize) {
 }
 /* 
  * Function for freeing up a previously allocated block.
- * Argument ptr: address of the block to be freed up.
- * Returns 0 on success.
- * Returns -1 on failure.
- * This function should:
- * - Return -1 if ptr is NULL.
- * - Return -1 if ptr is not a multiple of 8.
- * - Return -1 if ptr is outside of the heap space.
- * - Return -1 if ptr block is already freed.
- * - Update header(s) and footer as needed.
- *
- * If free results in two or more adjacent free blocks,
- * they will be immediately coalesced into one larger free block.
- * so free blocks require a footer (blockHeader works) to store the size
- *
- * TIP: work on getting immediate coalescing to work after your code 
- *      can pass the tests in partA and partB of tests/ directory.
- *      Submit code that passes partA and partB to Canvas before continuing.
  */
+
 int bfree(void *ptr) {
 	// check if pointer is initiated
     if (ptr == NULL) {
@@ -255,11 +145,8 @@ int bfree(void *ptr) {
 
 /* 
  * Initializes the memory allocator.
- * Called ONLY once by a program.
- * Argument sizeOfRegion: the size of the heap space to be allocated.
- * Returns 0 on success.
- * Returns -1 on failure.
- */                    
+ */
+
 int init_heap(int sizeOfRegion) {    
     static int allocated_once = 0; //prevent multiple myInit calls
     int   pagesize; // page size
@@ -313,22 +200,7 @@ int init_heap(int sizeOfRegion) {
     blockHeader *footer = (blockHeader*) ((void*)heap_start + alloc_size - 4);
     footer->size_status = alloc_size;
     return 0;
-} 
-/* STUDENTS MAY EDIT THIS FUNCTION, but do not change function header.
- * TIP: review this implementation to see one way to traverse through
- *      the blocks in the heap.
- *
- * Can be used for DEBUGGING to help you visualize your heap structure.
- * It traverses heap blocks and prints info about each block found.
- * 
- * Prints out a list of all the blocks including this information:
- * No.      : serial number of the block 
- * Status   : free/used (allocated)
- * Prev     : status of previous block free/used (allocated)
- * t_Begin  : address of the first byte in the block (where the header starts) 
- * t_End    : address of the last byte in the block 
- * t_Size   : size of the block as stored in the block header
- */                     
+}                     
 void disp_heap() {     
     int    counter;
     char   status[6];
