@@ -2,18 +2,7 @@ import java.io.FileNotFoundException;
 
 public interface BackendInterface {
 
-    /*
-     * GraphADT<String, Double> graph;
-     *
-     * public Backend(GraphADT<String, Double> graph){
-     *      this.graph = graph;
-     * }
-     */
-
-    /**
-     * read the data with the given filepath
-     * @param filepath
-     */
+    
     public void readData(String filepath) throws FileNotFoundException;
 
     /**
