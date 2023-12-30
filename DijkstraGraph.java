@@ -11,12 +11,6 @@ public class DijkstraGraph<NodeType, EdgeType extends Number>
         extends BaseGraph<NodeType, EdgeType>
         implements GraphADT<NodeType, EdgeType> {
 
-    /**
-     * While searching for the shortest path between two nodes, a SearchNode
-     * contains data about one specific path between the start node and another
-     * node in the graph. The final node in this path is stored in its node
-     * field. The total cost of this path is stored in its cost field. 
-     */
     protected class SearchNode implements Comparable<SearchNode> {
         public Node node;
         public double cost;
