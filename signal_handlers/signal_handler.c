@@ -1,25 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-// Main File:        send_signal.c
-// This File:        my_c_signal_handler.c
-// Other Files:      my_div0_handler.c, send_signal.c
-// Semester:         CS 354 Lecture 002 Fall 2023
-// Grade Group:      gg12
-// Instructor:       deppeler
-// 
-// Author:           Chance Howarth
-// Email:            crhowarth@wisc.edu
-// CS Login:         howarth
-//
-///////////////////////////  WORK LOG  //////////////////////////////
-//  Document your work sessions on your copy http://tiny.cc/work-log
-//  Download and submit a pdf of your work log for each project.
-/////////////////////////// OTHER SOURCES OF HELP ////////////////////////////// 
-// Persons:          N/A
-//
-// Online sources:   N/A
-// 
-// AI chats:         N/A
-//////////////////////////// 80 columns wide ///////////////////////////////////
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
+
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
