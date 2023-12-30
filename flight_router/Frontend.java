@@ -1,31 +1,10 @@
-// --== CS400 Fall 2023 File Header Information ==--
-// Name: <Chance Howarth>
-// Email: <crhowarth@wisc.edu email address>
-// Group: <your group's name: G17>
-// TA: <Robert Nagel>
-// Lecturer: <Florian>
-// Notes to Grader: <N/A>
-//
-
-// --== CS400 Fall 2023 File Header Information ==--
-// Name: <Chance Howarth>
-// Email: <crhowarth@wisc.edu email address>
-// Group: <your group's name: G17>
-// TA: <Robert Nagel>
-// Lecturer: <Florian>
-// Notes to Grader: <N/A>
-//
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
 
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-/**
- * This class exposes the functionality of the FrontendInterface to the Backend
- *
- * @author Chance Howarth
- *
- */
 public class Frontend implements FrontendInterface {
 
     BackendInterface backend;
