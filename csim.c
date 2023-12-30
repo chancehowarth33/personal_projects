@@ -1,54 +1,12 @@
-//ADD YOUR HEADER COMMENT
-////////////////////////////////////////////////////////////////////////////////
-// Main File:        csim.c
-// This File:        csim.c
-// Other Files:      
-// Semester:         CS 354 Lecture 002 Fall 2023
-// Grade Group:      gg12
-// Instructor:       deppeler
-// 
-// Author:           Chance Howarth
-// Email:            crhowarth@wisc.edu
-// CS Login:         howarth
-//
-///////////////////////////  WORK LOG  //////////////////////////////
-//  Document your work sessions on your copy http://tiny.cc/work-log
-//  Download and submit a pdf of your work log for each project.
-/////////////////////////// OTHER SOURCES OF HELP ////////////////////////////// 
-// Persons:          N/A
-//
-// Online sources:   N/A
-// 
-// AI chats:         N/A
-//////////////////////////// 80 columns wide ///////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//
-// Copyright 2013,2019-2020
-// Posting or sharing this file is prohibited, including any changes/additions.
-// Used by permission for Fall 2023
-//
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//
-// Copyright 2013,2019-2020
-// Posting or sharing this file is prohibited, including any changes/additions.
-// Used by permission for Fall 2023
-//
-////////////////////////////////////////////////////////////////////////////////
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
 
 /*
  * csim.c:  
  * A cache simulator that can replay traces (from Valgrind) and output
  * statistics for the number of hits, misses, and evictions.
  * The replacement policy is LRU.
- *
- * Implementation and assumptions:
- *  1. Each load/store can cause at most one cache miss plus a possible eviction.
- *  2. Instruction loads (I) are ignored.
- *  3. Data modify (M) is treated as a load followed by a store to the same
- *  address. Hence, an M operation can result in two cache hits, or a miss and a
- *  hit plus a possible eviction.
- */  
+ */
 
 #include <getopt.h>
 #include <stdlib.h>
@@ -61,10 +19,6 @@
 #include <errno.h>
 #include <stdbool.h>
 
-/******************************************************************************/
-/* DO NOT MODIFY THESE VARIABLES **********************************************/
-
-//Globals set by command line args.
 int b = 0; //number of (b) bits
 int s = 0; //number of (s) bits
 int E = 0; //number of lines per set
@@ -80,35 +34,23 @@ int evict_cnt = 0;
 
 //Global to control trace output
 int verbosity = 0; //print trace if set
-/******************************************************************************/
-
-
-//Type mem_addr_t: Use when dealing with addresses or address masks.
 typedef unsigned long long int mem_addr_t;
-
-//Type cache_line_t: Use when dealing with cache lines.
-//TODO - COMPLETE THIS TYPE
 typedef struct cache_line {                    
 	char valid;
 	mem_addr_t tag;
 	int lru_counter; //Add a data member as needed by your implementation for LRU tracking.
 } cache_line_t;
 
-//Type cache_set_t: Use when dealing with cache sets
-//Note: Each set is a pointer to a heap array of one or more cache lines.
+//cache_set_t: Use when dealing with cache sets
 typedef cache_line_t* cache_set_t;
 
-//Type cache_t: Use when dealing with the cache.
-//Note: A cache is a pointer to a heap array of one or more sets.
+//cache_t: Use when dealing with the cache.
 typedef cache_set_t* cache_t;
 
 // Create the cache we're simulating. 
-//Note: A cache is a pointer to a heap array of one or more cache sets.
 cache_t cache;  
 
-/* TODO - COMPLETE THIS FUNCTION
- * init_cache:
- * Allocates the data structure for a cache with S sets and E lines per set.
+ /* Allocates the data structure for a cache with S sets and E lines per set.
  * Initializes all valid bits and tags with 0s.
  */                    
 void init_cache() {
@@ -150,10 +92,7 @@ void init_cache() {
      
 }
 
-
-/* TODO - COMPLETE THIS FUNCTION 
- * free_cache:
- * Frees all heap allocated memory used by the cache.
+ /* Frees all heap allocated memory used by the cache.
  */                    
 void free_cache() {
 
@@ -166,10 +105,7 @@ void free_cache() {
     free(cache);         
 }
 
-
-/* TODO - COMPLETE THIS FUNCTION 
- * access_data:
- * Simulates data access at given "addr" memory address in the cache.
+ /* Simulates data access at given "addr" memory address in the cache.
  *
  * If already in cache, increment hit_cnt
  * If not in cache, cache it (set tag), increment miss_cnt
@@ -236,15 +172,9 @@ void access_data(mem_addr_t addr) {
     }
 }
 
-/* TODO - FILL IN THE MISSING CODE
- * replay_trace:
- * Replays the given trace file against the cache.
+ /* Replays the given trace file against the cache.
  *
  * Reads the input trace file line by line.
- * Extracts the type of each memory access : L/S/M
- * TRANSLATE each "L" as a load i.e. 1 memory access
- * TRANSLATE each "S" as a store i.e. 1 memory access
- * TRANSLATE each "M" as a load followed by a store i.e. 2 memory accesses 
  */                    
 void replay_trace(char* trace_fn) {           
 	char buf[1000];  
@@ -365,10 +295,8 @@ int main(int argc, char* argv[]) {
 	free_cache();
 
 	//Print the statistics to a file.
-	//DO NOT REMOVE: This function must be called for test_csim to work.
 	print_summary(hit_cnt, miss_cnt, evict_cnt);
 	return 0;   
 }  
 
-// Fall 202309
 
