@@ -1,10 +1,5 @@
-/// --== CS400 File Header Information ==--
-// Name: John Hatlestad
-// Email: jhatlestad@wisc.edu
-// Group and Team: <G17>
-// Group TA: <Robert Nagel>
-// Lecturer: <Florian Heimerl>
-// Notes to Grader: <None>
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,121 +9,81 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * This class exposes the functionality of the BackendInterface to the Frontend
- *
- * @author John Hatlestad
- *
- */
 public class Backend implements BackendInterface {
 
-    private DijkstraGraph<String, Double> graph; // Field to store graph
-    private double totalMiles; // Field to keep track of total miles in graph
-    private FrontendInterface frontendInstance; // Field to set frontendInstance
+    private DijkstraGraph<String, Double> routeGraph;
+    private double totalDistance;
+    private FrontendInterface frontend;
 
-    /**
-     * Constructor for Backend Class
-     * @param graph
-     */
-    public Backend(FrontendInterface frontendInstance) {
-        this.totalMiles = 0.0;
-        this.frontendInstance = frontendInstance;
-        this.graph = new DijkstraGraph<>(new PlaceholderMap<>());
+    public Backend(FrontendInterface frontendInterface) {
+        this.totalDistance = 0.0;
+        this.frontend = frontendInterface;
+        this.routeGraph = new DijkstraGraph<>(new PlaceholderMap<>());
     }
 
-    /**
-     * Loads in a .Dot file and inserts it in a graph
-     * @param filepath - name of .Dot file provided by user
-     * @throws FileNotFoundException if name of .Dot file doesn't exist
-     */
-    public void readData(String filepath) throws FileNotFoundException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // using regular expression to extract data
-                Matcher dataExtract = Pattern
-                        .compile("\"(\\w+)\"\\s*--\\s*\"(\\w+)\"\\s*\\[miles=(\\d+)\\]").matcher(line);
+    public void readData(String filePath) throws FileNotFoundException {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
+            String currentLine;
+            while ((currentLine = fileReader.readLine()) != null) {
+                Matcher routeMatcher = Pattern.compile("\"(\\w+)\"\\s*--\\s*\"(\\w+)\"\\s*\\[miles=(\\d+)\\]")
+                        .matcher(currentLine);
 
-                if (dataExtract.find()) {
-                    String startAirport = dataExtract.group(1);
-                    String endAirport = dataExtract.group(2);
-                    double weight = Double.parseDouble(dataExtract.group(3));
+                if (routeMatcher.find()) {
+                    String origin = routeMatcher.group(1);
+                    String destination = routeMatcher.group(2);
+                    double distance = Double.parseDouble(routeMatcher.group(3));
 
-                    if (!graph.containsNode(startAirport)) {
-                        graph.insertNode(startAirport);
+                    if (!routeGraph.containsNode(origin)) {
+                        routeGraph.insertNode(origin);
                     }
-                    if (!graph.containsNode(endAirport)) {
-                        graph.insertNode(endAirport);
+                    if (!routeGraph.containsNode(destination)) {
+                        routeGraph.insertNode(destination);
                     }
-                    graph.insertEdge(startAirport, endAirport, weight);
-                    totalMiles += weight;
+                    routeGraph.insertEdge(origin, destination, distance);
+                    totalDistance += distance;
                 }
             }
         } catch (IOException e) {
-            throw new FileNotFoundException("File not found: " + filepath);
+            throw new FileNotFoundException("Unable to find file: " + filePath);
         }
     }
 
-    /**
-     * Obtain the shortest route of given start airport and end airport as a string representation.
-     * @param startAirport
-     * @param endAirport
-     * @return a string representation of the shortest route between the given airports
-     */
-    public String getShortestRoute(String startAirport, String endAirport)
-            throws IllegalArgumentException {
-
-        if (!graph.containsNode(startAirport) || !graph.containsNode(endAirport)) {
-            throw new IllegalArgumentException();
+    public String getShortestRoute(String start, String end) {
+        if (!routeGraph.containsNode(start) || !routeGraph.containsNode(end)) {
+            throw new IllegalArgumentException("Invalid airport code.");
         }
-        // Use Dijkstra's algorithm to find the shortest path and total miles
-        List<String> route = graph.shortestPathData(startAirport, endAirport);
-        double totalMiles = graph.shortestPathCost(startAirport, endAirport);
 
-        String routeString = "";
-        // Retrieving the individual segment miles
-        for (int i = 0; i < route.size() - 1; i++) {
-            String airportOne = route.get(i);
-            String airportTwo = route.get(i + 1);
+        List<String> shortestRoute = routeGraph.shortestPathData(start, end);
+        double routeDistance = routeGraph.shortestPathCost(start, end);
 
-            double segmentMiles = graph.getEdge(airportOne, airportTwo);
-            routeString += airportOne + " (" + segmentMiles + " miles) -> ";
+        StringBuilder routeStrBuilder = new StringBuilder();
+        for (int i = 0; i < shortestRoute.size() - 1; i++) {
+            String fromAirport = shortestRoute.get(i);
+            String toAirport = shortestRoute.get(i + 1);
+
+            double segmentDistance = routeGraph.getEdge(fromAirport, toAirport);
+            routeStrBuilder.append(fromAirport).append(" (")
+                           .append(segmentDistance).append(" miles) -> ");
         }
-        routeString += route.get(route.size() - 1) + " (Total Miles: " + totalMiles + ")";
+        routeStrBuilder.append(shortestRoute.get(shortestRoute.size() - 1))
+                       .append(" (Total Miles: ").append(routeDistance).append(")");
 
-        return routeString;
+        return routeStrBuilder.toString();
     }
 
-    /**
-     * get a string with statistics about the data set that includes
-     * the number of nodes (airports),
-     * the number of edges (flights),
-     * and the total miles (sum of weights) for all edges in the graph
-     * @return a string represents the data statistics
-     */
     public String getSetStats() {
-        int numNodes = graph.getNodeCount();
-        int numEdges = graph.getEdgeCount();
+        int airports = routeGraph.getNodeCount();
+        int flights = routeGraph.getEdgeCount();
 
-        return "The total number of airports is: " + numNodes + "\nThe total number of flights is: "
-                + numEdges + " \nThe total miles is: " + this.totalMiles;
+        return "Total airports: " + airports + "\nTotal flights: " + flights +
+               "\nTotal distance: " + this.totalDistance + " miles";
     }
 
-    /**
-    * Sets the FrontendInstance
-    * @param frontend
-    */
-    public void setFrontendInstance(FrontendInterface frontend) {
-        this.frontendInstance = frontend;
+    public void setFrontendInstance(FrontendInterface frontendInterface) {
+        this.frontend = frontendInterface;
     }
 
-    /**
-     * getter method to retrieve the graph
-     * @return the loaded graph
-     */
     public DijkstraGraph<String, Double> getGraph() {
-        return graph;
+        return routeGraph;
     }
-
 }
-
