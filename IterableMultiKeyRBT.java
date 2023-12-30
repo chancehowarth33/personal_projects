@@ -1,11 +1,6 @@
-// --== CS400 File Header Information ==--
 // Name: Chance Howarth
-// Email: crhowarth@wisc.edu
-// Group: C31
-// TA: Manas Trivedi
-// Lecturer: Florian
-// Notes to Grader: NONE
-//
+// Email: howarthchance@gmail.com
+
 import java.util.Stack;
 import java.util.NoSuchElementException;
 import java.util.Iterator;
