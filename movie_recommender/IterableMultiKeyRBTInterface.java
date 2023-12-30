@@ -7,7 +7,7 @@ import java.util.Iterator;
  * This interfaces extends the SortedCollectionInterface to allow storing multiple values for a single key,
  * and to iterate over the keys and values stored in the data structure.
  */
-public interface IterableMultiKeySortedCollectionInterface<T extends Comparable<T>> extends SortedCollectionInterface<KeyListInterface<T>>, Iterable<T> {
+public interface IterableMultiKeyInterface<T extends Comparable<T>> extends SortedCollectionInterface<KeyListInterface<T>>, Iterable<T> {
 
     /**
      * Inserts value into tree that can store multiple objects per key by keeping
