@@ -1,5 +1,8 @@
+// Name: Chance Howarth
+// Email: howarthchance@gmail.com
+
 /**
- * Placeholder class for the Movies class to be made later, has the same methods, but it is finished and functional
+ * Class for the Movies class to be made later, has the same methods, but it is finished and functional
  */
 public class Movie implements MovieInterface {
 
