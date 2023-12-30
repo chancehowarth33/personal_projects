@@ -1,18 +1,5 @@
-// --== CS400 Fall 2023 File Header Information ==--
-// Name: <Chance Howarth>
-// Email: <crhowarth@wisc.edu email address>
-// Group: <your group's name: G17>
-// TA: <Robert Nagel>
-// Lecturer: <Florian>
-// Notes to Grader: <N/A>
-
-// --== CS400 Fall 2023 File Header Information ==--
-// Name: <Chance Howarth>
-// Email: <crhowarth@wisc.edu email address>
-// Group: <your group's name: G17>
-// TA: <Robert Nagel>
-// Lecturer: <Florian>
-// Notes to Grader: <N/A>
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
 
 import java.io.FileNotFoundException;
 
