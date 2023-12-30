@@ -1,0 +1,58 @@
+Script started on 2023-11-28 03:30:26+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="179" LINES="39"]
+[?2004h]0;crhowarth@chancehowarth: ~/p2[01;32mcrhowarth@chancehowarth[00m:[01;34m~/p2[00m$ git status
+[?2004lOn branch frontend
+Your branch is ahead of 'origin/frontend' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mlog[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?2004h]0;crhowarth@chancehowarth: ~/p2[01;32mcrhowarth@chancehowarth[00m:[01;34m~/p2[00m$ git log -1
+[?2004l[?1h=[33mcommit 90312824f606825c13772575523c2d5f2b256379[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m)[m[m
+Author: null <crhowarth@wisc.edu>[m
+Date:   Tue Nov 28 03:30:03 2023 +0000[m
+[m
+    last log made mistake[m
+[K[?1l>[?2004h]0;crhowarth@chancehowarth: ~/p2[01;32mcrhowarth@chancehowarth[00m:[01;34m~/p2[00m$ make clean
+[?2004lrm -f *.class
+[?2004h]0;crhowarth@chancehowarth: ~/p2[01;32mcrhowarth@chancehowarth[00m:[01;34m~/p2[00m$ ls
+[?2004lBackendInterface.java    BaseGraph.java   FlightPathInterface.java  FrontendDeveloperTests.java  GraphADT.java  MapADT.java          TextUITester.java  log
+BackendPlaceholder.java  FlightPath.java  Frontend.java             FrontendInterface.java       Makefile       PlaceholderMap.java  flights.dot
+[?2004h]0;crhowarth@chancehowarth: ~/p2[01;32mcrhowarth@chancehowarth[00m:[01;34m~/p2[00m$ make
+[?2004ljavac Frontend.java FrontendInterface.java TextUITester.java BackendInterface.java BackendPlaceholder.java FlightPath.java FlightPathInterface.java
+javac -cp .:../junit5.jar FrontendDeveloperTests.java
+java -cp .:../junit5.jar FrontendDeveloperTests
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m╷[0m
+[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
+[36m│  └─[0m [36mFrontendDeveloperTests[0m [32m✔[0m
+[36m│     ├─[0m [34mshowStats()[0m [32m✔[0m
+[36m│     ├─[0m [34mexitMessage()[0m [32m✔[0m
+[36m│     ├─[0m [34mreadFile()[0m [32m✔[0m
+[36m│     ├─[0m [34mmainMenuCommands()[0m [32m✔[0m
+[36m│     └─[0m [34mshortestRoute()[0m [32m✔[0m
+[36m├─[0m [36mJUnit Vintage[0m [32m✔[0m
+[36m└─[0m [36mJUnit Platform Suite[0m [32m✔[0m
+
+Test run finished after 196 ms
+[         4 containers found      ]
+[         0 containers skipped    ]
+[         4 containers started    ]
+[         0 containers aborted    ]
+[         4 containers successful ]
+[         0 containers failed     ]
+[         5 tests found           ]
+[         0 tests skipped         ]
+[         5 tests started         ]
+[         0 tests aborted         ]
+[         5 tests successful      ]
+[         0 tests failed          ]
+
+[?2004h]0;crhowarth@chancehowarth: ~/p2[01;32mcrhowarth@chancehowarth[00m:[01;34m~/p2[00m$ exit
+[?2004lexit
+
+Script done on 2023-11-28 03:30:58+00:00 [COMMAND_EXIT_CODE="0"]
