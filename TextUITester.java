@@ -1,3 +1,5 @@
+// Helper class for frontend tests
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
