@@ -1,3 +1,6 @@
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
+
 import java.util.LinkedList;
 import java.util.List;
 
