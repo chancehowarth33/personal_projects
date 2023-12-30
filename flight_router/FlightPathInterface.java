@@ -1,22 +1,9 @@
+// Author: Chance Howarth
+// Email: howarthchance@gmail.com
+
 import java.util.List;
 
 public interface FlightPathInterface {
-    
-    
-    // List<String> route;
-    // List<Double> segments;
-    // double totMiles;
-
-    // public FlightPath(GraphADT<String, Double> graph, String start, String end){
-        
-    //     this.totMiles = graph.shortestPathCost(start, end);
-    //     this.route = graph.shortestPathData(start, end);
-    //     this.segments = new ArrayList<>();
-    //     for(int i=1;i<this.route.size();i++){
-    //         this.segments.add(graph.getEdge(this.route.get(i-1), this.route.get(i)));
-    //     }
-
-    // }
 
 
     /**
