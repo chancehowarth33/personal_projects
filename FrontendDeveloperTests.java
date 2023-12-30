@@ -1,10 +1,5 @@
-// --== CS400 Fall 2023 File Header Information ==--
 // Name: Chance Howarth
-// Email: crhowarth@wisc.edu
-// Group: C31
-// TA: Manas Trivedi 
-// Lecturer: Florian
-// Notes to Grader: Rewrote all of the tests to accuratly test the frontend tests cause the last ones were invalid, since i dont have a partern i wrote all of these to test the interface as it says to do in the writeup
+// Email: howarthchance@gmail.com
 
 import java.util.List;
 import org.junit.platform.console.ConsoleLauncher;
