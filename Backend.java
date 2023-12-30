@@ -1,10 +1,5 @@
-// --== CS400 Fall 2023 File Header Information ==--
 // Name: Chance Howarth
-// Email: crhowarth@wisc.edu
-// Group: C31
-// TA: Manas Trivedi 
-// Lecturer: Florian
-// Notes to Grader:
+// Email: howarthchance@gmail.com
 
 import java.util.List;
 import java.util.ArrayList;
