@@ -1,3 +1,6 @@
+// Name: Chance Howarth
+// Email: howarthchance@gmail.com
+
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
