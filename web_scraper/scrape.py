@@ -105,7 +105,7 @@ class WebSearcher(GraphSearcher):
         self.table = pd.concat(self.rows, ignore_index = True)
         return self.table
     
-
+# exapmle of how to use these searching algo's
 def reveal_secrets(driver, url, travellog):
     clues_values = travellog['clue']
     to_string = clues_values.astype(str)
