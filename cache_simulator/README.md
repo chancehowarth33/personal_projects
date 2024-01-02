@@ -1,2 +1,2 @@
 # Cache Simulator
-Thos project is written in C and is a cache simulator. The main class is the csim.c file and it uses the other heap allocation files to check the effectivness of the cache.
+This code is a cache simulator written in C. It simulates a cache's behavior by replaying memory access traces, typically from tools like Valgrind, and outputs statistics about cache hits, misses, and evictions. The simulator uses the Least Recently Used (LRU) policy for cache replacement.
